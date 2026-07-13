@@ -105,7 +105,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
                 <span className="animate-pulse-custom absolute inline-flex h-full w-full rounded-full bg-[#059669] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 md:h-2.5 md:w-2.5 bg-[#059669]"></span>
               </span>
-              <span>LIVE · Emergency Response Active — Melbourne</span>
+              <span>LIVE · Emergency Response Active</span>
             </motion.div>
 
             {/* HEADLINE */}
