@@ -1,0 +1,6 @@
+{
+  "name": "FluxOS Emergency Electricians",
+  "description": "24/7 Emergency response electricians in Melbourne. Fast, safe, and reliable switchboard repairs and power outage solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
