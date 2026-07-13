@@ -34,23 +34,23 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq-section" className="bg-brand-navy py-20 relative overflow-hidden">
+    <section id="faq-section" className="bg-slate-50 py-20 relative overflow-hidden">
       {/* Decorative glows */}
-      <div className="absolute top-1/2 left-0 w-[40%] h-[50%] bg-brand-orange/[0.02] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[40%] h-[50%] bg-brand-orange/[0.01] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-6 md:px-8">
         {/* Section Title */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full mb-4">
-            <HelpCircle className="w-4 h-4 text-brand-yellow" />
-            <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-yellow">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full mb-4">
+            <HelpCircle className="w-4 h-4 text-brand-orange" />
+            <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-orange">
               Support Center
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-navy tracking-tight mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-400 font-sans text-base max-w-xl mx-auto">
+          <p className="text-gray-600 font-sans text-base max-w-xl mx-auto">
             Got questions? We have answers. If your concern is not answered below, speak to a dispatcher directly.
           </p>
         </div>
@@ -62,17 +62,17 @@ export default function FAQSection() {
             return (
               <div
                 key={idx}
-                className="bg-brand-navy-light/40 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors"
+                className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden hover:border-slate-300 transition-all shadow-sm"
               >
                 {/* Trigger Button */}
                 <button
                   onClick={() => toggleIndex(idx)}
                   className="w-full flex items-center justify-between p-6 text-left cursor-pointer focus:outline-none group select-none"
                 >
-                  <span className="font-display font-bold text-base md:text-lg text-white group-hover:text-brand-yellow transition-colors pr-4">
+                  <span className="font-display font-bold text-base md:text-lg text-brand-navy group-hover:text-brand-orange transition-colors pr-4">
                     {faq.q}
                   </span>
-                  <div className="w-8 h-8 rounded-lg bg-brand-navy border border-white/5 flex items-center justify-center text-gray-400 group-hover:text-white shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200/60 flex items-center justify-center text-gray-400 group-hover:text-brand-navy shrink-0">
                     {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </div>
                 </button>
@@ -86,7 +86,7 @@ export default function FAQSection() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                      <div className="px-6 pb-6 pt-1 text-gray-300 font-sans text-sm md:text-base leading-relaxed border-t border-white/5 text-left">
+                      <div className="px-6 pb-6 pt-1 text-gray-600 font-sans text-sm md:text-base leading-relaxed border-t border-slate-100 text-left">
                         {faq.a}
                       </div>
                     </motion.div>

@@ -6,26 +6,26 @@ export default function CoverageSection() {
   const regionsRight = ['South Eastern Suburbs', 'Western Suburbs', 'Mornington Peninsula'];
 
   return (
-    <section id="coverage" className="bg-brand-navy-light py-20 relative overflow-hidden">
+    <section id="coverage" className="bg-white py-20 relative overflow-hidden">
       {/* Decorative glows */}
-      <div className="absolute top-1/2 right-0 w-[40%] h-[50%] bg-brand-yellow/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[40%] h-[50%] bg-brand-orange/[0.01] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Description Column */}
           <div className="lg:col-span-6 flex flex-col items-start text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full mb-4">
-              <MapPin className="w-4 h-4 text-brand-yellow" />
-              <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-yellow">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full mb-4">
+              <MapPin className="w-4 h-4 text-brand-orange" />
+              <span className="font-sans text-xs font-bold uppercase tracking-wider text-brand-orange">
                 Service Boundaries
               </span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-navy tracking-tight mb-4 leading-tight">
               We cover all of Greater Melbourne
             </h2>
 
-            <p className="text-gray-300 font-sans text-base leading-relaxed mb-8">
+            <p className="text-gray-600 font-sans text-base leading-relaxed mb-8">
               To guarantee our industry-leading response speed, our fleet of fully-equipped response vans is strategically stationed across key arterial hubs. No matter where you live or run your business in Melbourne, there is always a FluxOS vehicle within driving distance.
             </p>
 
@@ -33,16 +33,16 @@ export default function CoverageSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
               <ul className="space-y-3.5">
                 {regionsLeft.map((reg) => (
-                  <li key={reg} className="flex items-center gap-3 text-white text-sm font-semibold">
-                    <CheckCircle2 className="w-5 h-5 text-brand-yellow shrink-0" />
+                  <li key={reg} className="flex items-center gap-3 text-brand-navy text-sm font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-brand-orange shrink-0" />
                     <span>{reg}</span>
                   </li>
                 ))}
               </ul>
               <ul className="space-y-3.5">
                 {regionsRight.map((reg) => (
-                  <li key={reg} className="flex items-center gap-3 text-white text-sm font-semibold">
-                    <CheckCircle2 className="w-5 h-5 text-brand-yellow shrink-0" />
+                  <li key={reg} className="flex items-center gap-3 text-brand-navy text-sm font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-brand-orange shrink-0" />
                     <span>{reg}</span>
                   </li>
                 ))}
@@ -50,11 +50,11 @@ export default function CoverageSection() {
             </div>
 
             {/* Quick trust prompt */}
-            <div className="flex gap-3 bg-brand-navy border border-white/5 rounded-xl p-4 w-full">
-              <ShieldCheck className="w-5 h-5 text-brand-yellow shrink-0 mt-0.5" />
+            <div className="flex gap-3 bg-slate-50 border border-slate-200/60 rounded-xl p-4 w-full shadow-sm">
+              <ShieldCheck className="w-5 h-5 text-brand-orange shrink-0 mt-0.5" />
               <div>
-                <p className="text-white text-xs font-bold uppercase tracking-wider">Strategic Deployment</p>
-                <p className="text-gray-400 text-xs mt-0.5">
+                <p className="text-brand-navy text-xs font-bold uppercase tracking-wider">Strategic Deployment</p>
+                <p className="text-gray-600 text-xs mt-0.5">
                   Vans are equipped with live GPS tracking systems. When you call, we dispatch the exact vehicle closest to your location.
                 </p>
               </div>
@@ -68,7 +68,7 @@ export default function CoverageSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-brand-navy max-w-md mx-auto lg:max-w-none"
+              className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-50 max-w-md mx-auto lg:max-w-none"
             >
               {/* Melbourne Metro Map Image */}
               <img

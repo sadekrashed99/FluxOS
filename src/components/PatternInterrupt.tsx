@@ -37,9 +37,9 @@ export default function PatternInterrupt({ onOpenQuote }: PatternInterruptProps)
   ];
 
   return (
-    <section id="pattern-interrupt" className="bg-brand-navy-light py-20 relative overflow-hidden">
+    <section id="pattern-interrupt" className="bg-slate-50 py-20 relative overflow-hidden">
       {/* Background radial highlight */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-brand-orange/[0.02] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -49,10 +49,10 @@ export default function PatternInterrupt({ onOpenQuote }: PatternInterruptProps)
               Identify Your Situation
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-navy tracking-tight mb-4 leading-tight">
             Dealing with an electrical nightmare right now?
           </h2>
-          <p className="text-gray-400 font-sans text-base sm:text-lg">
+          <p className="text-gray-600 font-sans text-base sm:text-lg">
             Electrical threats aren't just frustrating—they carry massive safety risks. If you are experiencing any of the following, you need professional intervention immediately.
           </p>
         </div>
@@ -67,19 +67,19 @@ export default function PatternInterrupt({ onOpenQuote }: PatternInterruptProps)
               viewport={{ once: true, margin: '-100px' }}
               transition={{ delay: idx * 0.1, duration: 0.5 }}
               onClick={() => onOpenQuote(sit.issueName)}
-              className={`group relative bg-brand-navy border border-white/5 rounded-2xl p-6 md:p-8 cursor-pointer transition-all duration-300 ${sit.glowColor} hover:border-white/10`}
+              className={`group relative bg-white border border-slate-200/80 rounded-2xl p-6 md:p-8 cursor-pointer transition-all duration-300 ${sit.glowColor} hover:border-slate-300 shadow-sm hover:shadow-md`}
             >
               {/* Card border accent wrapper */}
               <div className={`absolute inset-0 border border-transparent rounded-2xl transition-colors duration-300 ${sit.borderColor}`} />
 
-              <div className="w-12 h-12 rounded-xl bg-brand-navy-light border border-white/10 flex items-center justify-center text-brand-yellow mb-6 group-hover:bg-brand-navy-light group-hover:border-brand-yellow/30 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange/5 group-hover:border-brand-orange/20 transition-all duration-300">
                 <sit.icon className="w-6 h-6 transition-transform duration-500 group-hover:scale-110" />
               </div>
 
-              <h3 className="font-display text-xl font-bold text-white mb-3 group-hover:text-brand-yellow transition-colors">
+              <h3 className="font-display text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-orange transition-colors">
                 {sit.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">
                 {sit.desc}
               </p>
 
