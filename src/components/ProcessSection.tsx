@@ -1,5 +1,50 @@
 import { motion } from 'motion/react';
-import { PhoneCall, Truck, Sparkles, HelpCircle } from 'lucide-react';
+import { PhoneCall, HelpCircle } from 'lucide-react';
+
+const MovingVanIcon = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* Speed lines on the left */}
+    <path d="M2 8h3" />
+    <path d="M1 12h4" />
+    <path d="M2 16h3" />
+    {/* Truck main body */}
+    <path d="M7 7h8l4 4v6H7V7z" />
+    {/* Cabin divider */}
+    <path d="M15 7v4h4" />
+    {/* Wheels */}
+    <circle cx="9.5" cy="17" r="1.5" />
+    <circle cx="16.5" cy="17" r="1.5" />
+  </svg>
+);
+
+const CertificateIcon = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* Certificate frame */}
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+    {/* Text line representations */}
+    <path d="M7 8h10" />
+    <path d="M7 12h5" />
+    {/* Seal/Badge at the bottom right */}
+    <circle cx="15.5" cy="14.5" r="2" />
+    <path d="M14.5 16.5l-0.5 2 1.5-0.5 1.5 0.5-0.5-2" />
+  </svg>
+);
 
 export default function ProcessSection() {
   const steps = [
@@ -15,7 +60,7 @@ export default function ProcessSection() {
     },
     {
       step: '2',
-      icon: Truck,
+      icon: MovingVanIcon,
       title: 'Immediate Dispatch',
       desc: 'Our nearest fully stocked GPS-tracked service van is immediately routed to your precise location. We carry 95% of common parts on-board to solve repairs on the first visit.',
       hasImage: true,
@@ -25,7 +70,7 @@ export default function ProcessSection() {
     },
     {
       step: '3',
-      icon: Sparkles,
+      icon: CertificateIcon,
       title: 'Problem Solved Safely',
       desc: 'Our electrician secures the hazard, provides a firm fixed price quote, and performs certified code-compliant work. You get a safety compliance certificate for your records.',
       hasImage: true,
