@@ -19,15 +19,15 @@ export default function ElectricBrandmark({ size = 'md' }: ElectricBrandmarkProp
 
   return (
     <div className="flex items-center justify-center shrink-0">
-      {/* Flat solid orange container with zero animations, glow, or gradients */}
+      {/* Flat solid yellow container with zero animations, glow, or gradients */}
       <div 
-        className={`${containerClasses[size]} bg-[#FF4713] flex items-center justify-center`}
+        className={`${containerClasses[size]} bg-[#FFD600] flex items-center justify-center`}
       >
-        {/* Simple flat solid white lightning bolt */}
+        {/* Simple flat solid navy lightning bolt */}
         <svg
           viewBox="0 0 24 24"
           fill="currentColor"
-          className={`${svgSize[size]} text-white`}
+          className={`${svgSize[size]} text-[#0D1B2A]`}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
