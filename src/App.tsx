@@ -8,6 +8,7 @@ import TopNavBar from './components/TopNavBar';
 import HeroSection from './components/HeroSection';
 import TrustStrip from './components/TrustStrip';
 import PatternInterrupt from './components/PatternInterrupt';
+import PatternInterruptChecklist from './components/PatternInterruptChecklist';
 import StakesSection from './components/StakesSection';
 import ProcessSection from './components/ProcessSection';
 import WhyFluxOS from './components/WhyFluxOS';
@@ -15,6 +16,7 @@ import ExpertiseSection from './components/ExpertiseSection';
 import Testimonials from './components/Testimonials';
 import CoverageSection from './components/CoverageSection';
 import GuaranteeBanner from './components/GuaranteeBanner';
+import FluxOSGuarantee from './components/FluxOSGuarantee';
 import FAQSection from './components/FAQSection';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
@@ -48,6 +50,8 @@ export default function App() {
         
         <PatternInterrupt onOpenQuote={handleOpenQuote} />
         
+        <PatternInterruptChecklist />
+        
         <StakesSection onOpenQuote={() => handleOpenQuote()} />
         
         <ProcessSection />
@@ -61,6 +65,8 @@ export default function App() {
         <CoverageSection />
         
         <GuaranteeBanner />
+        
+        <FluxOSGuarantee onOpenQuote={() => handleOpenQuote()} />
         
         <FAQSection />
         

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Bolt, Menu, X, Phone } from 'lucide-react';
+import ElectricBrandmark from './ElectricBrandmark';
 
 interface TopNavBarProps {
   onOpenQuote: () => void;
@@ -38,11 +39,9 @@ export default function TopNavBar({ onOpenQuote }: TopNavBarProps) {
         <a
           id="header-logo-link"
           href="#"
-          className="flex items-center gap-2 font-display text-2xl font-black text-white tracking-tight hover:scale-102 transition-transform active:scale-98"
+          className="group flex items-center gap-3 font-display text-2xl font-black text-white tracking-tight hover:scale-102 transition-transform active:scale-98"
         >
-          <div className="w-9 h-9 rounded-lg bg-brand-yellow flex items-center justify-center glow-yellow">
-            <Bolt className="w-5.5 h-5.5 text-brand-navy fill-brand-navy" />
-          </div>
+          <ElectricBrandmark size="md" />
           <span className="font-display">FluxOS</span>
         </a>
 

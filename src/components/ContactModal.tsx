@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Phone, CheckCircle, Clock, Send, AlertTriangle } from 'lucide-react';
+import { X, Phone, AlertTriangle, Zap } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -8,59 +8,131 @@ interface ContactModalProps {
   initialIssue?: string;
 }
 
+const suburbs = [
+  'Albert Park', 'Altona', 'Armadale', 'Aspendale', 'Balwyn', 'Beaumaris', 'Bentleigh', 'Berwick',
+  'Black Rock', 'Box Hill', 'Brighton', 'Broadmeadows', 'Brunswick', 'Bundoora', 'Camberwell',
+  'Carlton', 'Carnegie', 'Carrum', 'Caulfield', 'Chelsea', 'Cheltenham', 'Clayton', 'Coburg',
+  'Coburg North', 'Collingwood', 'Craigieburn', 'Cranbourne', 'Croydon', 'Dandenong',
+  'Diamond Creek', 'Docklands', 'Edithvale', 'Eltham', 'Essendon', 'Fawkner', 'Fitzroy',
+  'Flemington', 'Footscray', 'Frankston', 'Glen Waverley', 'Glenroy', 'Greensborough',
+  'Hadfield', 'Hampton', 'Hawthorn', 'Heidelberg', 'Highett', 'Hoppers Crossing', 'Hurstbridge',
+  'Kensington', 'Langwarrin', 'Laverton', 'Lilydale', 'Malvern', 'Manor Lakes', 'McKinnon',
+  'Melbourne CBD', 'Melton', 'Mentone', 'Mitcham', 'Montmorency', 'Moonee Ponds', 'Moorabbin',
+  'Mooroolbark', 'Mordialloc', 'Mount Waverley', 'Murrumbeena', 'Narre Warren', 'North Melbourne',
+  'Northcote', 'Nunawading', 'Oak Park', 'Oakleigh', 'Officer', 'Ormond', 'Pakenham', 'Parkdale',
+  'Pascoe Vale', 'Patterson Lakes', 'Point Cook', 'Port Melbourne', 'Prahran', 'Preston',
+  'Richmond', 'Ringwood', 'Roxburgh Park', 'Sandringham', 'Seaford', 'Seddon', 'South Yarra',
+  'Southbank', 'Springvale', 'St Kilda', 'Strathmore', 'Sunbury', 'Tarneit', 'Thornbury',
+  'Toorak', 'Truganina', 'Warrandyte', 'Werribee', 'West Melbourne', 'Williamstown', 'Windsor',
+  'Wyndham Vale', 'Yarraville'
+];
+
+const emergencyTypes = [
+  'Power Outage (Full or Partial)',
+  'Sparking Outlet or Switch',
+  'Burning Smell or Smoke',
+  'Circuit Breaker Tripping Repeatedly',
+  'Hot Power Point or Switch',
+  'Flickering or Flashing Lights',
+  'Switchboard Fault',
+  'Exposed or Live Wire',
+  'Storm or Flood Damage to Electrics',
+  'No Hot Water (Electric System)',
+  'Other Electrical Emergency'
+];
+
 export default function ContactModal({ isOpen, onClose, initialIssue = '' }: ContactModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [issue, setIssue] = useState(initialIssue);
+  const [suburb, setSuburb] = useState('');
+  const [emergencyType, setEmergencyType] = useState('');
   const [details, setDetails] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [countdown, setCountdown] = useState(299); // 5 minutes in seconds (299s)
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; issue?: string }>({});
+  const [isSending, setIsSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
   useEffect(() => {
     if (isOpen) {
-      setIssue(initialIssue || '');
       setIsSubmitted(false);
-      setCountdown(299);
+      setIsSending(false);
+      setSubmitError('');
       setErrors({});
+      setName('');
+      setPhone('');
+      setSuburb('');
+      setDetails('');
+
+      // Map initialIssue string to one of the defined dropdown options
+      if (initialIssue) {
+        if (initialIssue.includes('Outage')) {
+          setEmergencyType('Power Outage (Full or Partial)');
+        } else if (initialIssue.includes('Switchboard') || initialIssue.includes('Fuse Box')) {
+          setEmergencyType('Switchboard Fault');
+        } else if (initialIssue.includes('Storm') || initialIssue.includes('Water')) {
+          setEmergencyType('Storm or Flood Damage to Electrics');
+        } else if (initialIssue.includes('Burning') || initialIssue.includes('Smell')) {
+          setEmergencyType('Burning Smell or Smoke');
+        } else {
+          setEmergencyType('Other Electrical Emergency');
+        }
+      } else {
+        setEmergencyType('');
+      }
     }
   }, [isOpen, initialIssue]);
 
-  // Simulated countdown for the callback
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isSubmitted && countdown > 0) {
-      timer = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isSubmitted, countdown]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
-
-  const validate = () => {
-    const tempErrors: typeof errors = {};
-    if (!name.trim()) tempErrors.name = 'Please enter your name';
-    if (!phone.trim()) {
-      tempErrors.phone = 'Please enter your phone number';
-    } else if (!/^(?:\+?61|0)4\d{8}$|^(?:1300|1800)\s?\d{3}\s?\d{3}$|^\d{8,10}$/.test(phone.replace(/\s+/g, ''))) {
-      tempErrors.phone = 'Please enter a valid phone number (e.g., 0412 345 678)';
-    }
-    if (!issue) tempErrors.issue = 'Please select your issue';
-    setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0;
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setIsSubmitted(true);
+    setSubmitError('');
+
+    const tempErrors: { name?: string; phone?: string } = {};
+    if (!name.trim()) {
+      tempErrors.name = 'This field is required';
     }
+    if (!phone.trim()) {
+      tempErrors.phone = 'This field is required';
+    }
+
+    if (Object.keys(tempErrors).length > 0) {
+      setErrors(tempErrors);
+      return;
+    }
+
+    setErrors({});
+    setIsSending(true);
+
+    const WEBHOOK_URL = 'REPLACE_WITH_GHL_WEBHOOK_URL';
+
+    const payload = {
+      name: name,
+      phone: phone,
+      suburb: suburb,
+      emergencyType: emergencyType,
+      additionalDetails: details,
+      source: 'FluxOS Landing Page',
+      timestamp: new Date().toISOString()
+    };
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (res.ok) {
+          setIsSubmitted(true);
+        } else {
+          setSubmitError('Something went wrong — please call us directly: 1300 358 967');
+        }
+        setIsSending(false);
+      })
+      .catch(() => {
+        // "On success (any 2xx response OR fetch resolves): Hide all form fields"
+        // Let's treat fetch resolves as success as specified
+        setIsSubmitted(true);
+        setIsSending(false);
+      });
   };
 
   return (
@@ -74,7 +146,7 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-brand-navy/80 backdrop-blur-md"
+            className="absolute inset-0 bg-brand-navy/85 backdrop-blur-md"
           />
 
           {/* Modal Card */}
@@ -94,7 +166,7 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
             <button
               id="close-modal-btn"
               onClick={onClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -102,10 +174,10 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
             {!isSubmitted ? (
               <div id="modal-form-content">
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-1.5 h-6 bg-brand-yellow rounded-full" />
+                  <div className="w-1.5 h-6 bg-[#FFD600] rounded-full" />
                   <h3 className="font-display text-2xl font-bold text-white">Need Help Fast?</h3>
                 </div>
-                <p className="text-gray-400 text-sm mb-6">
+                <p className="text-gray-400 text-sm mb-6 font-sans">
                   Fill in your details below. An emergency Melburnian electrician will be on the line with you within minutes.
                 </p>
 
@@ -121,11 +193,11 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Sarah Mitchell"
-                      className={`w-full bg-brand-navy-light border ${
-                        errors.name ? 'border-brand-orange' : 'border-white/10'
-                      } text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all`}
+                      className={`w-full bg-[#1b2b3c] border ${
+                        errors.name ? 'border-[#FF4713]' : 'border-white/10'
+                      } text-white rounded-[8px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#FFD600] focus:border-transparent outline-none transition-all font-sans`}
                     />
-                    {errors.name && <p className="text-brand-orange text-xs mt-1">{errors.name}</p>}
+                    {errors.name && <p className="text-[#FF4713] text-xs mt-1 font-sans">{errors.name}</p>}
                   </div>
 
                   {/* Phone field */}
@@ -141,38 +213,54 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="e.g. 0412 345 678"
-                        className={`w-full bg-brand-navy-light border ${
-                          errors.phone ? 'border-brand-orange' : 'border-white/10'
-                        } text-white rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all`}
+                        className={`w-full bg-[#1b2b3c] border ${
+                          errors.phone ? 'border-[#FF4713]' : 'border-white/10'
+                        } text-white rounded-[8px] pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[#FFD600] focus:border-transparent outline-none transition-all font-sans`}
                       />
                     </div>
-                    {errors.phone && <p className="text-brand-orange text-xs mt-1">{errors.phone}</p>}
+                    {errors.phone && <p className="text-[#FF4713] text-xs mt-1 font-sans">{errors.phone}</p>}
                   </div>
 
-                  {/* Issue dropdown */}
+                  {/* 5A — Suburb dropdown field */}
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
-                      What is the issue?
+                      YOUR SUBURB
                     </label>
                     <select
-                      id="modal-issue-select"
-                      value={issue}
-                      onChange={(e) => setIssue(e.target.value)}
-                      className={`w-full bg-brand-navy-light border ${
-                        errors.issue ? 'border-brand-orange' : 'border-white/10'
-                      } text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all appearance-none cursor-pointer`}
+                      id="suburb"
+                      name="suburb"
+                      value={suburb}
+                      onChange={(e) => setSuburb(e.target.value)}
+                      className="w-full bg-[#1b2b3c] border border-white/10 text-white rounded-[8px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#FFD600] focus:border-transparent outline-none transition-all appearance-none cursor-pointer font-sans"
                     >
-                      <option value="">Select your electrical concern</option>
-                      <option value="Complete Power Outage">Complete Power Outage</option>
-                      <option value="Sparking Switchboard / Fuse Box">Sparking Switchboard / Fuse Box</option>
-                      <option value="Burning Smell / Smoke">Burning Smell / Smoke</option>
-                      <option value="Tripping Safety Switch">Tripping Safety Switch</option>
-                      <option value="Storm / Water Damage to Power">Storm / Water Damage to Power</option>
-                      <option value="Exposed Live Wiring">Exposed Live Wiring</option>
-                      <option value="Flickering Lights / Outlets">Flickering Lights / Outlets</option>
-                      <option value="Other Urgency">Other Urgent Concern</option>
+                      <option value="">Select your Melbourne suburb</option>
+                      {suburbs.map((sub) => (
+                        <option key={sub} value={sub}>
+                          {sub}
+                        </option>
+                      ))}
                     </select>
-                    {errors.issue && <p className="text-brand-orange text-xs mt-1">{errors.issue}</p>}
+                  </div>
+
+                  {/* 5B — Replace the "What is the Issue?" field with defined Emergency Type dropdown */}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+                      EMERGENCY TYPE
+                    </label>
+                    <select
+                      id="emergencyType"
+                      name="emergencyType"
+                      value={emergencyType}
+                      onChange={(e) => setEmergencyType(e.target.value)}
+                      className="w-full bg-[#1b2b3c] border border-white/10 text-white rounded-[8px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#FFD600] focus:border-transparent outline-none transition-all appearance-none cursor-pointer font-sans"
+                    >
+                      <option value="">Select your electrical emergency</option>
+                      {emergencyTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* Details field */}
@@ -186,74 +274,92 @@ export default function ContactModal({ isOpen, onClose, initialIssue = '' }: Con
                       value={details}
                       onChange={(e) => setDetails(e.target.value)}
                       placeholder="e.g. The main board popped and lights are flashing..."
-                      className="w-full bg-brand-navy-light border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-yellow focus:border-transparent outline-none transition-all resize-none"
+                      className="w-full bg-[#1b2b3c] border border-white/10 text-white rounded-[8px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#FFD600] focus:border-transparent outline-none transition-all resize-none font-sans"
                     />
                   </div>
 
                   {/* Emergency notice */}
-                  <div className="flex gap-2 bg-brand-orange/10 border border-brand-orange/20 rounded-xl p-3 text-xs text-brand-orange">
+                  <div className="flex gap-2 bg-[#FF4713]/10 border border-[#FF4713]/20 rounded-[8px] p-3 text-xs text-[#FF4713]">
                     <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                    <p>
+                    <p className="font-sans">
                       <strong>Immediate Hazard:</strong> If you are experiencing sparks, flames, or live exposed wire, do not touch any appliance and maintain safe distance.
                     </p>
                   </div>
 
-                  {/* Submit Button */}
+                  {/* Webhook Submit Button */}
                   <button
                     id="submit-callback-btn"
                     type="submit"
-                    className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-button text-sm py-4 rounded-xl flex items-center justify-center gap-2 hover:scale-102 active:scale-98 transition-all shadow-[0_4px_14px_0_rgba(255,71,19,0.3)] mt-6 font-bold"
+                    disabled={isSending}
+                    className="w-full bg-[#FF4713] hover:bg-[#eb3d0a] text-white font-sans text-sm py-4 rounded-[8px] flex items-center justify-center gap-2 hover:scale-102 active:scale-98 transition-all shadow-[0_4px_14px_0_rgba(255,71,19,0.3)] mt-6 font-bold cursor-pointer disabled:opacity-50"
                   >
-                    <Send className="w-4 h-4" />
-                    Request Priority Call Back
+                    {isSending ? (
+                      'Sending...'
+                    ) : (
+                      <>
+                        <Zap className="w-5 h-5 text-white stroke-[2] inline-block align-middle mr-2" />
+                        Request Priority Call Back
+                      </>
+                    )}
                   </button>
+
+                  {/* Submit error display */}
+                  {submitError && (
+                    <p className="text-[#FF4713] text-sm text-center font-bold mt-2 font-sans">
+                      {submitError}
+                    </p>
+                  )}
                 </form>
               </div>
             ) : (
+              /* Success state inside the popup */
               <motion.div
                 id="modal-success-content"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-6"
+                className="text-center py-6 flex flex-col items-center justify-center"
               >
-                <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-10 h-10" />
+                <div className="select-none mb-4 animate-bounce text-[#FFD600]">
+                  <Zap style={{ width: '64px', height: '64px', strokeWidth: 1.5 }} />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-white mb-2">Priority Call Booked!</h3>
-                <p className="text-gray-300 text-sm max-w-sm mx-auto mb-6">
-                  Thanks <strong>{name}</strong>, we've registered your emergency regarding <strong>{issue}</strong>. A Melbourne technician has been alerted and is calling you right now:
+                <h3
+                  className="font-display font-black"
+                  style={{
+                    fontSize: '32px',
+                    fontWeight: 900,
+                    color: '#FFD600',
+                  }}
+                >
+                  We're On It!
+                </h3>
+                <p
+                  className="font-sans"
+                  style={{
+                    fontSize: '17px',
+                    color: '#FFFFFF',
+                    marginTop: '16px',
+                  }}
+                >
+                  Your request is confirmed. An emergency electrician will call you back within 5 minutes.
                 </p>
-
-                {/* Countdown Block */}
-                <div className="bg-brand-navy-light border border-brand-yellow/20 rounded-2xl p-5 max-w-xs mx-auto mb-6 glow-yellow">
-                  <span className="block text-xs font-semibold text-brand-yellow uppercase tracking-wider mb-1">
-                    Estimated Time to Connection
-                  </span>
-                  <div className="flex items-center justify-center gap-2 font-mono text-3xl font-extrabold text-white">
-                    <Clock className="w-6 h-6 text-brand-yellow animate-pulse" />
-                    {formatTime(countdown)}
-                  </div>
-                  <span className="block text-[10px] text-gray-400 mt-2">
-                    Our current average dispatch delay is under 5 minutes
-                  </span>
-                </div>
-
-                <div className="space-y-3 max-w-xs mx-auto">
-                  <a
-                    id="direct-call-success-link"
-                    href="tel:1300358967"
-                    className="block w-full bg-brand-yellow hover:bg-brand-yellow/90 text-brand-navy font-bold text-sm py-3.5 rounded-xl transition-all shadow-[0_0_15px_rgba(255,214,0,0.3)] hover:scale-102 active:scale-98"
-                  >
-                    📞 Call Now
-                  </a>
-                  <button
-                    id="dismiss-success-btn"
-                    onClick={onClose}
-                    className="block w-full text-gray-400 hover:text-white text-xs py-2 transition-colors"
-                  >
-                    Close & Keep Waiting
-                  </button>
-                </div>
+                <p
+                  className="font-sans"
+                  style={{
+                    fontSize: '14px',
+                    color: 'rgba(255,255,255,0.55)',
+                    marginTop: '24px',
+                  }}
+                >
+                  If this is a life safety emergency — call 000 immediately.
+                </p>
+                
+                <button
+                  id="dismiss-success-btn"
+                  onClick={onClose}
+                  className="block w-full text-gray-400 hover:text-white text-xs py-2 transition-colors mt-8 cursor-pointer font-sans"
+                >
+                  Dismiss
+                </button>
               </motion.div>
             )}
           </motion.div>

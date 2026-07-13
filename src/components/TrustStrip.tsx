@@ -1,10 +1,10 @@
-import { Shield, Sparkles, Truck, Star, CircleDollarSign } from 'lucide-react';
+import { Shield, Sparkles, Clock, Star, CircleDollarSign } from 'lucide-react';
 
 export default function TrustStrip() {
   const credentials = [
     { icon: Shield, label: 'Fully Licensed', sub: 'A-Grade Electricians' },
     { icon: Sparkles, label: '$20M Insurance', sub: 'Public Liability Protected' },
-    { icon: Truck, label: 'Local Vans On Standby', sub: 'Strategic Hubs' },
+    { icon: Clock, label: '60-Min Response Guarantee', sub: 'On-site rapidly' },
     { icon: Star, label: '4.9/5 Rating', sub: '1,000+ Happy Customers' },
     { icon: CircleDollarSign, label: 'Fixed Upfront Costs', sub: 'No Sudden Surprises' },
   ];

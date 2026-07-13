@@ -1,163 +1,285 @@
 import { motion } from 'motion/react';
-import { Bolt, Phone, ShieldCheck, MapPin, Clock } from 'lucide-react';
+import { Zap, ShieldCheck, Star, ChevronDown } from 'lucide-react';
 
 interface HeroSectionProps {
   onOpenQuote: () => void;
 }
 
 export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
+  const chipBaseStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: 'rgba(255, 255, 255, 0.07)',
+    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: 'blur(12px)',
+    border: '1px solid rgba(255, 255, 255, 0.12)',
+    borderRadius: '50px',
+    padding: '10px 20px',
+    fontSize: '14px',
+    fontWeight: 600,
+    color: '#FFFFFF',
+    letterSpacing: '0.2px',
+  };
+
   return (
-    <section id="hero-section" className="relative bg-brand-navy pt-28 pb-16 md:py-32 overflow-hidden">
-      {/* Background Decorative Glow Elements */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-brand-orange/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-yellow/15 rounded-full blur-[150px] pointer-events-none" />
+    <section 
+      id="hero-section" 
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#0D1B2A] pt-20 md:pt-24 lg:pt-28"
+    >
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.5; }
+        }
+        @keyframes shine {
+          0% { left: -100%; }
+          40%, 100% { left: 160%; }
+        }
+        .animate-pulse-custom {
+          animation: pulse 2s ease-in-out infinite;
+        }
+        .animate-shine-custom {
+          position: relative;
+          overflow: hidden;
+        }
+        .animate-shine-custom::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 60%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          transform: skewX(-20deg);
+          animation: shine 3.5s ease-in-out infinite;
+        }
+      ` }} />
 
-      {/* Grid Pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,255,255,0.03),rgba(255,255,255,0))]" />
+      {/* Layer 1 — Hero photograph (bottom) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-no-repeat bg-center lg:bg-right lg:bg-fixed"
+        style={{
+          backgroundImage: `url('https://res.cloudinary.com/dk7z1b7k7/image/upload/v1783942859/gy25bxp60cu61b1vjbdh.webp')`,
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Text Column */}
-          <div className="lg:col-span-7 flex flex-col items-start">
-            {/* Live Badge */}
+      {/* Layer 2 — Directional dark gradient (middle) */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(105deg, rgba(13, 27, 42, 0.97) 0%, rgba(13, 27, 42, 0.88) 45%, rgba(13, 27, 42, 0.45) 75%, rgba(13, 27, 42, 0.15) 100%)'
+        }}
+      />
+
+      {/* Layer 3 — Noise/grain texture (top, decorative) */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          opacity: 0.025
+        }}
+      />
+
+      {/* Subtle radial glow in the bottom-left corner */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 0% 100%, rgba(255,71,19,0.12) 0%, transparent 60%)'
+        }}
+      />
+
+      {/* Content wrapper */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 w-full flex-grow flex items-center py-4 md:py-8 lg:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 w-full gap-8 lg:gap-12 items-center">
+          {/* Left zone: 55% width */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            
+            {/* LIVE STATUS INDICATOR */}
             <motion.div
-              id="hero-badge"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 bg-brand-orange/10 border border-brand-orange/20 rounded-full px-3.5 py-1.5 mb-6"
+              className="inline-flex items-center gap-1.5 md:gap-2 mb-3 md:mb-4 select-none px-3 py-1.5 md:px-4.5 md:py-2 rounded-full text-[11px] md:text-[13px] font-semibold text-white tracking-widest uppercase bg-[#059669]/15 border border-[#059669]/40 backdrop-blur-md"
             >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-orange"></span>
+              <span className="relative flex h-2 w-2 md:h-2.5 md:w-2.5">
+                <span className="animate-pulse-custom absolute inline-flex h-full w-full rounded-full bg-[#059669] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 md:h-2.5 md:w-2.5 bg-[#059669]"></span>
               </span>
-              <span className="font-sans text-[11px] md:text-xs font-bold uppercase tracking-widest text-brand-orange">
-                24/7 RAPID EMERGENCY RESPONSE
-              </span>
+              <span>LIVE · Emergency Response Active — Melbourne</span>
             </motion.div>
 
-            {/* Headline */}
+            {/* HEADLINE */}
             <motion.h1
               id="hero-headline"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-6 text-left"
+              className="font-black text-white leading-[1.05] tracking-tight text-[34px] sm:text-[38px] md:text-[52px] lg:text-[68px] xl:text-[76px] mb-3 md:mb-4"
+              style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
             >
-              Power Out? Switchboard Sparking? <br />
-              <span className="text-brand-yellow drop-shadow-[0_2px_10px_rgba(255,214,0,0.15)]">
-                We’re Already On Our Way.
+              Melbourne’s Emergency <br className="hidden sm:inline" />
+              Electrician. <br className="hidden sm:inline" />
+              <span 
+                style={{
+                  background: 'linear-gradient(90deg, #FFD600 0%, #FFA500 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                On-Site in 60 Minutes.
               </span>
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* SUBHEADLINE */}
             <motion.p
               id="hero-subtitle"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-gray-300 font-sans text-base sm:text-lg lg:text-xl leading-relaxed mb-8 max-w-2xl text-left"
+              className="font-sans text-[15px] sm:text-[17px] lg:text-[19px] font-normal leading-relaxed tracking-tight mx-auto lg:mx-0 mb-4 md:mb-5 lg:mb-6"
+              style={{
+                color: 'rgba(255,255,255,0.70)',
+                maxWidth: '520px',
+              }}
             >
-              Melbourne's premier emergency electricians. We dispatch fully stocked service vans instantly to secure, diagnose, and solve your electrical threats, any time of day or night.
+              Guaranteed response or $50 off your bill — available 24/7, every day of the year.
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* PRIMARY CTA BUTTON */}
             <motion.div
-              id="hero-ctas"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10"
+              className="w-full sm:w-auto"
             >
               <button
-                id="hero-quote-btn"
+                id="hero-primary-cta"
                 onClick={onOpenQuote}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-brand-orange hover:bg-brand-orange/95 text-white font-sans text-base font-bold uppercase tracking-wider px-8 py-4.5 rounded-xl transition-all shadow-[0_5px_15px_rgba(255,71,19,0.4)] hover:scale-102 active:scale-98 glow-orange"
+                className="animate-shine-custom group select-none font-sans cursor-pointer flex items-center justify-center gap-2.5 md:gap-3 transition-all duration-300 w-full sm:w-auto px-6 py-3.5 sm:px-10 sm:py-4 md:px-12 md:py-5 text-sm sm:text-base md:text-[19px] font-bold rounded-xl mb-4 md:mb-5"
+                style={{
+                  background: 'linear-gradient(135deg, #FF4713 0%, #FF6035 100%)',
+                  color: '#FFFFFF',
+                  letterSpacing: '-0.3px',
+                  border: 'none',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3), 0 12px 40px rgba(255, 71, 19, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset',
+                  transition: 'all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 8px 8px rgba(0,0,0,0.3), 0 20px 60px rgba(255,71,19,0.55), 0 0 0 1px rgba(255,255,255,0.1) inset';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3), 0 12px 40px rgba(255, 71, 19, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset';
+                }}
               >
-                <Bolt className="w-5 h-5 fill-white text-white" />
-                Send Electrician Now
+                <Zap style={{ width: '20px', height: '20px', color: '#FFD600', strokeWidth: 2.5 }} />
+                <span>Get an Electrician Now</span>
               </button>
-              <a
-                id="hero-call-btn"
-                href="tel:1300358967"
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-transparent border-2 border-brand-yellow hover:bg-brand-yellow/10 text-brand-yellow font-sans text-base font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all font-bold hover:scale-102 active:scale-98"
-              >
-                <Phone className="w-5 h-5 fill-brand-yellow text-brand-yellow animate-bounce" />
-                Call Now
-              </a>
             </motion.div>
 
-            {/* Bullet Trust indicators */}
+            {/* TRUST CHIPS */}
             <motion.div
-              id="hero-bullets"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full border-t border-white/10 pt-8"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="inline-flex flex-wrap justify-center lg:justify-start gap-2 md:gap-3 w-full mb-4 md:mb-5"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <p className="text-white text-xs font-bold uppercase tracking-wider leading-none">Fully Licensed</p>
-                  <p className="text-gray-400 text-[10px] mt-0.5">REC #34821 / $20M Insured</p>
-                </div>
+              {/* Chip 1 */}
+              <div className="inline-flex items-center gap-1.5 md:gap-2 bg-white/7 backdrop-blur-md border border-[#FFD600]/25 rounded-full px-2.5 py-1.5 md:px-4 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white tracking-wide">
+                <Zap style={{ width: '14px', height: '14px', color: '#FFD600', strokeWidth: 2.5, fill: '#FFD600' }} />
+                <span>60-Min Response Guarantee</span>
               </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <p className="text-white text-xs font-bold uppercase tracking-wider leading-none">Melbourne Owned</p>
-                  <p className="text-gray-400 text-[10px] mt-0.5">Fleet strategically placed</p>
-                </div>
+              {/* Chip 2 */}
+              <div className="inline-flex items-center gap-1.5 md:gap-2 bg-white/7 backdrop-blur-md border border-[#059669]/30 rounded-full px-2.5 py-1.5 md:px-4 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white tracking-wide">
+                <ShieldCheck style={{ width: '14px', height: '14px', color: '#059669', strokeWidth: 2.5 }} />
+                <span>No Fix No Fee</span>
               </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <p className="text-white text-xs font-bold uppercase tracking-wider leading-none">60-Min Target</p>
-                  <p className="text-gray-400 text-[10px] mt-0.5">Rapid dispatch guarantee</p>
-                </div>
+              {/* Chip 3 */}
+              <div className="inline-flex items-center gap-1.5 md:gap-2 bg-white/7 backdrop-blur-md border border-[#FFD600]/20 rounded-full px-2.5 py-1.5 md:px-4 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white tracking-wide">
+                <Star style={{ width: '14px', height: '14px', color: '#FFD600', strokeWidth: 0, fill: '#FFD600' }} />
+                <span>4.9 · 847 Reviews</span>
               </div>
             </motion.div>
+
+
+
           </div>
 
-          {/* Right Image Column */}
-          <div className="lg:col-span-5 relative">
-            <motion.div
-              id="hero-img-container"
-              initial={{ opacity: 0, scale: 0.95, rotate: 1 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.7 }}
-              className="relative rounded-2xl overflow-hidden border border-white/15 shadow-2xl glow-yellow max-w-md mx-auto lg:max-w-none"
-            >
-              {/* Electrician at night image */}
-              <img
-                id="hero-main-img"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIrlieKSvQPbEuLpa10rXz9WUSlYLTQVEqDXAxcp6DMiqT8RB_DsRx3MIBHyIpullZhB6rmbex3G_XYvPMfatLm5Awj9jZL7faz-jt7MswDoTrRpAjyA07GC4YvicR_x67Osc9hUCb8hfv2LN5dKBoAqglYoioUmPgmuouhdSSRS3ThOzR-vskXC5_mU9AouI7rAcMUV0YRms62_PXp5e7sdev7e7rTm3Pr0U_rD3L_xHD0URmUAzkN_C3m8fiMyCoRKAg5NV48JU"
-                alt="FluxOS Emergency Electrician arriving at night"
-                referrerPolicy="no-referrer"
-                className="w-full h-auto aspect-4/3 object-cover hover:scale-105 transition-transform duration-700"
-              />
+          {/* Right zone: breathes empty on desktop */}
+          <div className="lg:col-span-5 hidden lg:block" />
+        </div>
+      </div>
 
-              {/* Status Indicator pill on image */}
-              <div className="absolute bottom-4 left-4 bg-brand-navy/90 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2.5 flex items-center gap-2.5">
-                <div className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                </div>
-                <p className="text-[11px] font-mono font-bold tracking-wider text-white uppercase">
-                  14 local vans active in VIC
-                </p>
-              </div>
-            </motion.div>
+      {/* SCROLL INDICATOR */}
+      <div 
+        className="absolute bottom-[90px] left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-[rgba(255,255,255,0.3)] animate-bounce select-none pointer-events-none hidden lg:flex"
+      >
+        <ChevronDown className="w-6 h-6 stroke-[1.5]" />
+      </div>
 
-            {/* Glowing accents behind image */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-brand-yellow/10 rounded-full blur-[80px] -z-10 pointer-events-none" />
+      {/* HERO STATS BAR */}
+      <div 
+        className="w-full relative z-10 mt-auto"
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          padding: '14px 0',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-y-4 md:gap-y-0 items-center justify-center">
+            {/* Stat 1 */}
+            <div className="flex flex-col items-center text-center">
+              <span className="text-xl sm:text-2xl md:text-[26px] font-extrabold text-[#FFD600] tracking-tight leading-none">
+                &lt; 60 min
+              </span>
+              <span className="text-[10px] md:text-[12px] font-medium text-white/50 uppercase tracking-wider mt-1 md:mt-1.5 leading-tight text-center">
+                Average Response Time
+              </span>
+            </div>
+
+            {/* Divider 1 */}
+            <div className="hidden md:block h-10 w-px bg-[rgba(255,255,255,0.08)]"></div>
+
+            {/* Stat 2 */}
+            <div className="flex flex-col items-center text-center">
+              <span className="text-xl sm:text-2xl md:text-[26px] font-extrabold text-[#FFD600] tracking-tight leading-none">
+                4.9 ★
+              </span>
+              <span className="text-[10px] md:text-[12px] font-medium text-white/50 uppercase tracking-wider mt-1 md:mt-1.5 leading-tight text-center">
+                Star Rating (847 reviews)
+              </span>
+            </div>
+
+            {/* Divider 2 */}
+            <div className="hidden md:block h-10 w-px bg-[rgba(255,255,255,0.08)]"></div>
+
+            {/* Stat 3 */}
+            <div className="flex flex-col items-center text-center">
+              <span className="text-xl sm:text-2xl md:text-[26px] font-extrabold text-[#FFD600] tracking-tight leading-none">
+                100%
+              </span>
+              <span className="text-[10px] md:text-[12px] font-medium text-white/50 uppercase tracking-wider mt-1 md:mt-1.5 leading-tight text-center">
+                Licensed & Insured
+              </span>
+            </div>
+
+            {/* Divider 3 */}
+            <div className="hidden md:block h-10 w-px bg-[rgba(255,255,255,0.08)]"></div>
+
+            {/* Stat 4 */}
+            <div className="flex flex-col items-center text-center">
+              <span className="text-xl sm:text-2xl md:text-[26px] font-extrabold text-[#FFD600] tracking-tight leading-none">
+                24 / 7
+              </span>
+              <span className="text-[10px] md:text-[12px] font-medium text-white/50 uppercase tracking-wider mt-1 md:mt-1.5 leading-tight text-center">
+                Always Available
+              </span>
+            </div>
           </div>
         </div>
       </div>

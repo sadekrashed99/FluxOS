@@ -5,27 +5,51 @@ export default function Testimonials() {
   const reviews = [
     {
       initial: 'M',
-      name: 'Mark T.',
-      location: 'Richmond, VIC',
+      name: 'Mark T. — Fitzroy',
+      location: 'Fitzroy, VIC',
       rating: 5,
       text: 'Woke up to a burning smell at 4am. Called FluxOS and they were here in 45 minutes. Found a melting wire in the roof space. Literally saved our house. Can\'t thank them enough.',
       date: '2 weeks ago',
     },
     {
       initial: 'J',
-      name: 'Jessica L.',
-      location: 'South Yarra, VIC',
+      name: 'Jessica L. — Toorak',
+      location: 'Toorak, VIC',
       rating: 5,
       text: 'Half the house lost power on Christmas Eve. Other places said they wouldn\'t come out until after Boxing Day. FluxOS showed up, diagnosed a faulty safety switch, and fixed it on the spot. Great service.',
       date: '1 month ago',
     },
     {
       initial: 'D',
-      name: 'David W.',
-      location: 'Brunswick, VIC',
+      name: 'David W. — Essendon',
+      location: 'Essendon, VIC',
       rating: 5,
       text: 'Very professional. The electrician explained exactly what was wrong and how much it would cost before starting. Left the place cleaner than he found it. Highly recommend.',
       date: '3 days ago',
+    },
+    {
+      initial: 'S',
+      name: 'Sarah M. — Box Hill',
+      location: 'Box Hill, VIC',
+      rating: 5,
+      text: 'Our power went out completely during a severe thunderstorm. The technician arrived armed with professional diagnostics tools and got our power restored within 50 minutes. Excellent service!',
+      date: '5 days ago',
+    },
+    {
+      initial: 'M',
+      name: 'Michael S. — St Kilda',
+      location: 'St Kilda, VIC',
+      rating: 5,
+      text: 'Extremely quick response. A sparking outlet in the kitchen was diagnosed and fully replaced safely in under an hour. Outstanding communication from the dispatcher.',
+      date: '1 week ago',
+    },
+    {
+      initial: 'E',
+      name: 'Emma K. — Bundoora',
+      location: 'Bundoora, VIC',
+      rating: 5,
+      text: 'Fantastic lifetime workmanship guarantee. They resolved our switchboard tripping issue instantly. Very friendly and professional crew.',
+      date: '3 weeks ago',
     },
   ];
 
@@ -61,14 +85,14 @@ export default function Testimonials() {
         </div>
 
         {/* Review Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reviews.map((rev, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              transition={{ delay: idx * 0.05, duration: 0.5 }}
               className="bg-brand-navy-light/30 border border-white/5 rounded-2xl p-6 md:p-8 relative hover:border-white/10 hover:bg-brand-navy-light/50 transition-all duration-300 text-left flex flex-col justify-between"
             >
               {/* Card Accent Quote Icon */}
