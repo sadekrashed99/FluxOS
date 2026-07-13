@@ -25,7 +25,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
   return (
     <section 
       id="hero-section" 
-      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#0D1B2A] pt-20 md:pt-24 lg:pt-28"
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#0D1B2A] pt-20 md:pt-24 lg:pt-20 xl:pt-24"
     >
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes pulse {
@@ -90,7 +90,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
       />
 
       {/* Content wrapper */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 w-full flex-grow flex items-center py-4 md:py-8 lg:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 w-full flex-grow flex items-center py-4 md:py-8 lg:py-4 xl:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 w-full gap-8 lg:gap-12 items-center">
           {/* Left zone: 55% width */}
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -99,7 +99,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-1.5 md:gap-2 mb-3 md:mb-4 select-none px-3 py-1.5 md:px-4.5 md:py-2 rounded-full text-[11px] md:text-[13px] font-semibold text-white tracking-widest uppercase bg-[#059669]/15 border border-[#059669]/40 backdrop-blur-md"
+              className="inline-flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3 select-none px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[11px] md:text-[13px] font-semibold text-white tracking-widest uppercase bg-[#059669]/15 border border-[#059669]/40 backdrop-blur-md"
             >
               <span className="relative flex h-2 w-2 md:h-2.5 md:w-2.5">
                 <span className="animate-pulse-custom absolute inline-flex h-full w-full rounded-full bg-[#059669] opacity-75"></span>
@@ -114,7 +114,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="font-black text-white leading-[1.05] tracking-tight text-[34px] sm:text-[38px] md:text-[52px] lg:text-[68px] xl:text-[76px] mb-3 md:mb-4"
+              className="font-black text-white leading-[1.05] tracking-tight text-[34px] sm:text-[38px] md:text-[48px] lg:text-[48px] xl:text-[58px] mb-2.5 md:mb-3.5"
               style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
             >
               Melbourne’s Emergency <br className="hidden sm:inline" />
@@ -137,7 +137,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="font-sans text-[15px] sm:text-[17px] lg:text-[19px] font-normal leading-relaxed tracking-tight mx-auto lg:mx-0 mb-4 md:mb-5 lg:mb-6"
+              className="font-sans text-[15px] sm:text-[17px] lg:text-[18px] font-normal leading-relaxed tracking-tight mx-auto lg:mx-0 mb-3.5 md:mb-4 lg:mb-4 xl:mb-5"
               style={{
                 color: 'rgba(255,255,255,0.70)',
                 maxWidth: '520px',
@@ -156,7 +156,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
               <button
                 id="hero-primary-cta"
                 onClick={onOpenQuote}
-                className="animate-shine-custom group select-none font-sans cursor-pointer flex items-center justify-center gap-2.5 md:gap-3 transition-all duration-300 w-full sm:w-auto px-6 py-3.5 sm:px-10 sm:py-4 md:px-12 md:py-5 text-sm sm:text-base md:text-[19px] font-bold rounded-xl mb-4 md:mb-5"
+                className="animate-shine-custom group select-none font-sans cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-300 w-full sm:w-auto px-6 py-3.5 sm:px-10 sm:py-4 lg:px-8 lg:py-3.5 xl:px-10 xl:py-4.5 text-sm sm:text-base lg:text-[16px] xl:text-[18px] font-bold rounded-xl mb-3.5 lg:mb-4 xl:mb-5"
                 style={{
                   background: 'linear-gradient(135deg, #FF4713 0%, #FF6035 100%)',
                   color: '#FFFFFF',
@@ -184,7 +184,7 @@ export default function HeroSection({ onOpenQuote }: HeroSectionProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
-              className="inline-flex flex-wrap justify-center lg:justify-start gap-2 md:gap-3 w-full mb-4 md:mb-5"
+              className="inline-flex flex-wrap justify-center lg:justify-start gap-2 md:gap-3 w-full mb-3 lg:mb-4"
             >
               {/* Chip 1 */}
               <div className="inline-flex items-center gap-1.5 md:gap-2 bg-white/7 backdrop-blur-md border border-[#FFD600]/25 rounded-full px-2.5 py-1.5 md:px-4 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white tracking-wide">
